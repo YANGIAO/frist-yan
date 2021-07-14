@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Symbol() 作用：创建Symol类型的数据
+        let id = Symbol('id');
+        console.log(id);
+        console.log(typeof id);  // symbol 类型
+
+        let obj = {
+            name: '123'
+        }
+
+        let obj1 = {
+            name: "345"
+        }
+
+        // 因为在 es5中,合并对象,如果存在重复属性,就会产生属性覆盖现象/
+        let obj2 = { ...obj, ...obj1 };
+        console.log(obj2);
+
+        // symbol 类型 具有唯一性。
+        // 即使使用 同一条数据创建的symbol,两个返回值也是不一样的
+        let id1 = Symbol('id');
+        let id2 = Symbol('id');
+        console.log(id1, id2);
+        console.log(id2 === id1); // false
+
+
+        // 利用 symbol 类型的唯一性 解决 属性名字冲突的问题
+        // 1：将key 值变为 symbol 类型
+        // 1.1  key 值引入变量
+        let name = 'age';
+        let obj3 = {
+            // name: '123',  // name 是字符串
+            [name]: 12,  // [name]  使用 便变量name 的赋值 
+
+            [Symbol('name')]:123,
+        }
+
+        let obj4 = {
+            [Symbol('name')]: "345"
+        }
+        // name 没有覆盖.因为 symbol 类型数据具有唯一性
+        let obj5 = {...obj3,...obj4};
+        console.log(obj5);
+
+
+        // 隐蔽性
+        // 1: for... in 不能湖区symbol类型数据
+        // 2: object.keys() 不能获取 symbol 类型的数据
+        
+
+        // Object.getOwnPropertySymbols(obj) 可以 获取 symbol 属性
+        // for...of 结构 可以获取symbol 属性.
+        for(let k in obj5){
+            console.log(obj5[k],k);
+        }
+
+        let arr = Object.keys(obj5);
+        console.log(arr);
+        console.log(Object.getOwnPropertySymbols(obj5));
+
+
+       
+    </script>
+</body>
+<!-- 
+    1: 有了 symbol js 数据类型为7中
+    2: 如何创建symbol 类型
+    3: symbol 类型的唯一性
+    4: symbol 类型隐蔽性
+    5: symbol 基本不用,应对面试的
+ -->
+</html>

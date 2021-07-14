@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //  1: 将 ajax 或者 axios 该为 promise 风格.
+        // let xhr = new XMLHttpRequest();
+        // xhr.open('GET', 'http://49.232.47.192:9527/api/goodList?page=1');
+        // xhr.send()
+        // xhr.onreadystatechange = function () {
+        //     if (xhr.readyState === 4) {
+        //         yan(xhr)
+        //     }
+        // }
+        // function yan(xhr) {
+        //     let p = new Promise((resolve, reject) => {
+        //         resolve(xhr.responseText);
+        //     })
+        //     p.then(data => {
+        //         console.log(JSON.parse(data));
+        //     })
+        // }
+        // 2: 找到首页发送网络请求的代码,改为 promise 风格
+        function ajax(url, params, method, data) {
+            let p = new Promise((resolve, reject) => {
+                var method = method || "GET";
+                var data = data || null;
+                var xhr = new XMLHttpRequest();
+                if (params) {
+                    xhr.open(method, `http://49.232.47.192:9527/api/${url}?${params}`);
+                } else {
+                    xhr.open(method, `http://49.232.47.192:9527/api/${url}`);
+                }
+                xhr.send(data);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        resolve(xhr.responseText);
+                    }
+                }
+                setTimeout(() => {
+                    reject("数据请求失败");
+                }, 1000);
+            })
+            return p;
+        }
+        let p = ajax("goodList", 'page=1', "GET");
+        p.then(msg => {
+            console.log(JSON.parse(msg));
+        }).catch(msg => {
+            console.log(msg);
+        })
+    </script>
+</body>
+
+</html>

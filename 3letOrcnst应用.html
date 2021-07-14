@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>hellow word</h1>
+    <h1>hellow word</h1>
+    <h1>hellow word</h1>
+    <script>
+        // var h1s = document.querySelectorAll('h1');
+        // for(var i = 0;i<h1s.length;i++){
+        //     h1s[i].onclick = function (params) {
+        //         console.log(i);
+        //         console.log(h1s[i]);
+        //         h1s[i].style.color  = 'red'  // bug 变量污染导致
+        //     }
+        // }
+
+        // var h1s = document.querySelectorAll('h1');
+        // for (var i = 0; i < h1s.length; i++) {
+        //     (function (i) {
+        //         h1s[i].onclick = function (params) {
+        //             h1s[i].style.color =
+        //  'red'
+        //         }
+        //     })(i)
+
+        // }
+
+
+        var h1s = document.querySelectorAll('h1');
+        for(let i = 0;i<h1s.length;i++){
+            h1s[i].onclick = function (params) {
+                console.log(i);
+                console.log(h1s[i]);
+                h1s[i].style.color  = 'red'  // bug 变量污染导致
+            }
+        }
+    </script>
+    <script>
+        // 1: 代替闭包解决变量污染问题
+
+        // var tmp = 123;
+        // if(true){
+        //    var tmp = '123';   // bug 变量污染
+        //    function foo(params) {
+        //        console.log(tmp);
+        //    }
+        // }
+
+        // (function () {
+        //     if(true){
+        //        var tmp = '123';
+        //        function foo(params) {
+        //            console.log(tmp);
+        //        }
+        //     }
+        // })()
+
+
+
+        // (function (params) {
+        //     var a = 123;
+        // })
+
+        // // let 代替上面写法
+
+        // {
+        //     let a = 123;
+        // }
+    </script>
+</body>
+
+</html>

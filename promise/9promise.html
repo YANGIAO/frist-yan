@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>为什么有promise</title>
+</head>
+
+<body>
+    <script>
+        // es6 中为什么要有promise 
+        // promise 解决了什么问题 ？
+        // 1：解决回调函数层层嵌套，回调地狱的问题。
+        // 2：解决代码可读性差的问题
+
+
+
+
+        // 问题
+        // 回调函数嵌套回到函数。形成回调地狱
+        // 代码可读性特别差。
+        // function foo(callback) { //  函数1
+        //     console.log('111');
+        //     callback(function (callback) { // 函数2
+        //         console.log('222');
+        //         callback('你好')
+        //     })
+        // }
+
+        // foo(function (call) { // 函数3
+        //     console.log('333');
+        //     call(function (a) {  // 函数4 
+        //         console.log('444');
+        //         console.log(a);
+        //     })
+        // })
+
+
+
+        // 1: 有执行速度慢慢的代码.有执行熟读快的代码
+        // 2: 有回调函数
+        // 3：读代码时候，上传下跳
+
+
+        // function ajax(option={url:"/",method:"get"},callbaci) {
+        //     // 执行速度快
+        //     var xhr = new XMLHttpRequest();
+        //     xhr.open(option.method.open.url)
+        //     xhr.send();
+        //     xhr.onreadystatechange = function (params) {
+        //         // 所有的事件处理函数中的代码执行速度都慢的。
+
+        //         // 执行速度满
+        //         if(xhr.readyState ==4){
+        //             callbaci(xhr.responseText)
+        //         }
+        //     }
+        // }
+        // ajax({url:"/",method:'get'},function (data) {
+        //     // 执行速度慢
+        //     data= JSON.parse(data)
+        //     reder(data)
+        // })
+        // function render(data) {
+        //     console.log('根据数据dom ',data);
+        // }
+
+
+        // 1：怎么创建promise实例
+        // Promise()  作用：创建promise 实例的
+        let p = new Promise((resolve, reject) => {
+            console.log('new primise');
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET','http://49.232.47.192:9527/api/goodList?page=1')
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState===4){
+                    resolve(xhr.responseText)
+                }
+            }
+
+        })
+        console.log(p);
+        // 2: 怎么使用promise 代替上面的程序呢?
+        p.then((data) => {
+            // then 的回调函数执行是慢的
+            console.log('data then',data);
+        })
+
+        console.log('我是为了验证 promise 中的执行慢的程序');
+
+    </script>
+</body>
+
+</html>
+
+<!-- 
+    1: promise 哪里的程序是 执行慢的程序
+    2: primise 哪里的程序 是 正常程序
+ -->

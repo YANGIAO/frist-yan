@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>变量</title>
+</head>
+
+<body>
+    <script>
+        // es5  var  function  可以提升变量
+        // es6 let const       没有提升变量
+        //     import class    模块化开发， 类
+
+
+        // var a ;
+        // if(true){
+        //     var b = 123;
+        // }
+        // for(var i = 0 ;i<12;i++){
+        //     var data = 123
+        // }
+        // function foo() {
+        //     var bar = 123;
+        // }
+
+        // 问题：那些是全局变量  那些是 局部变量
+        // 全局：a b i data  foo
+        // 局部：bar
+        // ----> 使用变量的规则
+
+        // console.log(a);
+        // console.log(b);
+        // console.log(i);
+        // console.log(data);
+        // console.log(foo);
+        // console.log(bar);
+
+
+        // 1: 由let const 声明的变量在【同一个作用域】中不能存在重复声明的变量（可以为任意6中声明方式一 ）
+        // bug: Identifier 'a' has already been declared
+        // var a;
+        // let a = 123;
+        // const a ;
+        // function a(params) {}
+
+
+
+        // 2: es6 中let const 声明的变量没有变量提升。
+        // bug:  Cannot access 'b' before initialization；
+        // ----> 换句话：不声明不能用
+        // console.log(b);
+        let b = '123';
+        b = 456;
+
+
+        // 3 const声明的常量不能被修改。let 为变量
+        // bug  Assignment to constant variable.
+        // const c=123;
+        // c = 456;
+
+        // 4 注意：当const 赋值为 引用类型数据。可以修改引用类型数据
+
+        // 不是说const 声明的是常量，不能被重新赋值，为什么对象或者数组中内容被修改了？？？
+        // 当const赋值为引用类型数据的时候，保证的 const 变量 保存的地址不变，不能保证地址中存放数据是否发生变化。
+
+        const obj = { a: 1243 };
+        obj.a = '456';
+        console.log(obj);
+        // obj = {};   // 修改了 obj 常量的指针
+
+        // 5： es6 让 typeof 不在 100%正确。不会报错
+
+        // 方式一: 理解暂时性死区
+        // 6:  在同一作用域中,在声明变量之前使用变量,该区域为暂时性死区.
+        // 注意: 1 不是一个特定区域, 指的是 在当前作用域下声明的 变量, 在该作用域中哪里不能使用.
+        //       2 根据变量的 声明范围 与使用范围确定的区域.
+        //       3 在暂时性死区中 typeof 不会100% 准确了
+
+        // 方式二: 理解暂时性死区
+        // 怎么找暂时性死区 ？
+        // 1： 找 let const
+        // 2:  找 let const 变量的作用域
+        // 3： 在 当前作用域中，声明之前，不能使用let const 变量定位  区域为展示性死区
+
+        // 暂时性死区特点：
+        // 1：使用变量报错
+        // 2：typeof 不能100% 正确
+
+        // 展示性死区怎么形成的？
+        // es6中 let const 声明的变量没有 变量提升
+
+        // typeof x;
+        // let x;
+
+
+        console.log('------------------分界线----------------------');
+        // 7: let 在全局中声明的变量, 不会赋值给window 
+        var aname = 'jilong';
+        console.log(window.aname);
+
+        let cname = 'fuyungui';
+        console.log(window.cname);
+  
+
+
+
+        
+ 
+    </script>
+</body>
+
+</html>
