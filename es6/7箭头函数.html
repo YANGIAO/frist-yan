@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //  1: 箭头函数代替函数编写
+        let foo = function () {
+            return 123
+        }
+
+        let foo1 = (a, b) => {
+
+            return 123
+        }
+        // 2: 箭头函数 简写  a 形参 返回值为 123
+        let foo2 = a=>123;
+        let foo3 = (a,b) => '123';
+
+        // 3: 箭头函数中 没有 this 
+        // 使用this如何判断呢？
+        // 1: 看函数在哪里写的,this 就是该上下文中的this.
+
+    
+        let foo4 = ()=>{
+            console.log(this);
+        }
+        let obj = {foo:foo4};
+        obj.foo();
+
+        function  bar() {
+            console.log(this);
+            setTimeout(()=>{
+                // 这里的this 不是window 是 bar 的this  
+                console.log(this);
+            },100)
+        }
+
+        // 4: 箭头函数中没有auguments属性,但是可以使用rest 参数代替
+
+        let foo5 = function(){
+            console.log(arguments);
+        }
+        let foo6  = (...rest)=>{ // ...rest 参数  ...变量名字 写在形参的位置 为 rest 擦拿书
+            console.log(rest);
+            // console.log(arguments); // bug  
+        }
+        foo5(1,2,2,2,2);
+        foo6(1,2,3,45,5)
+        // 5 形参形参 设置默认值
+        // 如果函数执行没有参数,使用 形参默认值,如果有 那么使用传入的实参
+        function ba1(a=1,b,c={url:'123'}) {
+            console.log(a,b,c);
+        }
+        ba1();
+        ba1(123,1,123)
+
+        console.log(ba1.toString()); 
+    </script>
+    <!-- 
+        es5 函数扩展 5个点
+        1: 箭头函数 代替 匿名函数
+        2: 箭头函数中没有this
+        3: 箭头函数中没有 arguments 可以用 rest 参数代替
+        4: 函数形参可以设置默认值
+     -->
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>then 链式执行异步任务 </title>
+</head>
+
+<body>
+    <script>
+        // 排队行的的异步任务，换句话：强制将异步问题 同步化
+        // 需求：一个异步任务之后完事后 执行下一个异步任务
+
+        // 原代码
+        setTimeout(function (params) {
+            console.log('第一个异步任务');
+            setTimeout(function (params) {
+                console.log('第二个异步任务');
+            }, 2000)
+        }, 1000)
+
+        // console.log('同步程序');
+
+
+
+        // 最难的
+        // 异步程序是什么时候开始的
+        // 异步是什么时候结束的
+        // 异步程序的外界如何知道异步程序结束了。可以开始下一个了。
+
+
+
+        // promise 如何实现 上面内容
+        // then 链式 方式实现 连续执行异步任务
+
+        // 分析：一个异步任务为一个 promise 
+
+        function p1() {
+            return new Promise((resolve, reject) => {
+                console.log('第一个异步任务开始执行了');
+
+                setTimeout(() => {
+                    console.log('第一个异步任务结束了');
+                    resolve("告诉外界任务一结果")
+                }, 1000);
+            })
+        }
+        function p2() {
+            return new Promise((resolve, reject) => {
+                console.log('第二个异步任务开始执行了');
+
+                setTimeout(() => {
+                    console.log('第二个异步任务结束了');
+                    resolve("告诉外界任务二结果")
+                }, 2000);
+            })
+        }
+
+        p1().then(res => {
+            console.log('----------------分割线，我是外界------------------------------');
+            console.log(res);
+            console.log('根据任务一结果，处理任务；然后执行任务二');
+            return p2() // 开始执行任务二
+        }).then(res => {
+            console.log('------------------分界线，我是外界--------------------------');
+            console.log(res)
+            console.log('根据任务二结果 处理任务');
+        })
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function promise1() {
+            return new Promise(function (resolve, reject) {
+                console.log(this);  // window
+                setTimeout(() => {
+                    resolve()
+                }, 2000)
+            })
+        }
+        let p = promise1().then((res) => {
+            console.log(this); // window
+            return 1
+        })
+        p.then((res) => {
+            console.log(res);
+        })
+
+        // 解读、
+        // 如果onFillled 不是一个函数,并且 promise1变为已决绝,那么 promise2 必须执行 已完成
+        // 1: then 的参一不是函数情况 参二 函数
+        // 2: 执行的是 reject 
+        // ---->结果: promise2 执行的是 参一 函数
+
+        var promise1 = new Promise((resolve, reject) => { reject(); });
+        const promise2 = promise1
+            .then(null, function () {
+                // return 123
+            });
+        promise2
+            .then(
+                (res) => {
+                    console.log('promise2 已完成',);
+                },
+                () => {
+                    console.log('promise2 已拒绝');
+                });
+    </script>
+</body>
+
+</html>

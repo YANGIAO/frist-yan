@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let p = new Promise((resolve,reject)=>{
+
+            console.log('这里是同步代码');
+
+            setTimeout(()=>{
+                // 模拟异步程序
+                resolve({
+                    code:200,
+                    msg:'网络请求成功'
+                })
+            },1000)
+        })
+
+        p.then(res=>{
+            console.log(res);
+            return JSON.stringify(res)
+        }).then(res=>{
+            console.log(res);
+            // 注意:只要有bug 后面的 then 就不会执行.直接执行 catch 
+            console.log(yexurui); // bug
+            return 'hahah'+res
+        }).then(res=>{
+            console.log(res);
+            // stop 
+        }).catch(err=>{
+            // catch  捕获错误
+            // 1: 在 整个promise 任务链上, 任何一个阶段出现错误都会执行catch
+            console.log('执行了 catch',err);
+        })
+    </script>
+</body>
+</html>

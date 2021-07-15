@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 为什么有 展开运算符
+        // 为了方便
+        let obj = {
+            name: "123",
+            age: 12
+        }
+        // cObj 对象 有  obj 中所有的属性
+        // let cObj = {
+        //     size:'12'
+        // }
+        // for(let k in obj){
+        //     cObj[k] = obj[k]
+        // }
+
+        // ... 展开运算符x
+        // ...{},可以获取对象中所有的key:value 简直对
+
+        let cObj = {
+            size: '12',
+            ...obj,
+        }
+        console.log(cObj);
+
+        // 2: 如果展开的是对象，只能将 ...obj 放在对象中，不能放在数组中
+        // bug:  cObj is not iterable
+
+        //  let arr = [...obj]
+
+        // 注意 存在展开运算符的对象，可以继续展开
+        let obj1 = { ...cObj };
+
+        // 注意：1 在对象中 可以使用多个展开运算符
+        //      2：展开的对象中，属性有重复，相当于对属性重新赋值。以最后一次运算为主。
+        let obj2 = {...cObj,...obj}
+
+
+        // 展开运算符可以展开数组
+        let arr = [1,2,3];
+        let cArr = [...arr];
+        console.log(cArr);
+    </script>
+
+    <script>
+        // 属性简写
+        let userID = 'YANQI';
+        let password = '1234';
+        // 1: 对象中属性，使用变量的赋值
+        // 2：对象的属性和变量名字一样
+
+        // let user = {
+        //     userID:userID,
+        //     password:password
+        // }
+
+
+        // 当属性名字与变量名字 一样时候，可以 属性简写
+        let user= {
+            userID,
+            password
+        }
+        console.log(user);
+    </script>
+</body>
+
+</html>
